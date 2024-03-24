@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <%= product._id ? 'Edit' : 'Add' %> Product
+    </title>
+</head>
+
+<body>
+    <h1>
+        <%= product._id ? 'Edit' : 'Add' %> Product
+    </h1>
+
+    <% if (errors.length> 0) { %>
+        <div style="color: red;">
+            <% errors.forEach(function(error) { %>
+                <p>
+                    <%= error.msg %>
+                </p>
+                <% }) %>
+        </div>
+        <% } %>
+
+            <form action="<%= product._id ? '/products/edit/' + product._id : '/products/add' %>" method="post">
+                <div>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" value="<%= product.name || '' %>" required>
+                </div>
+                <div>
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" required><%= product.description || '' %></textarea>
+                </div>
+                <div>
+                    <label for="price">Price:</label>
+                    <input type="number" id="price" name="price" value="<%= product.price || 0 %>" required step="0.01">
+                </div>
+                <button type="submit">
+                    <%= product._id ? 'Update' : 'Add' %> Product
+                </button>
+            </form>
+            <a href="/products">Back to List</a>
+</body>
+
+</html>
