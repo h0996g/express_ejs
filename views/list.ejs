@@ -4,24 +4,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Product List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .admin-actions a {
+            margin-left: 10px;
+        }
+
+        .logout {
+            float: right;
+        }
+    </style>
 </head>
 
 <body>
     <h1>Product List</h1>
-    <% if (typeof isAdmin !=='undefined' && isAdmin) { %>
+    <a href="/users/logout" class="logout">Logout</a>
+    <% if (isAdmin) { %>
         <a href="/products/add">Add New Product</a>
         <% } %>
-            <!-- Logout Link -->
-            <a href="/users/logout" style="float: right;">Logout</a>
-
             <ul>
-                <% products.forEach(product=> { %>
+                <% products.forEach(function(product) { %>
                     <li>
-                        <%= product.name %> - <%= product.description %> - $<%= product.price %>
+                        <%= product.name %>: <%= product.description %>, $<%= product.price %>
                                     <% if (isAdmin) { %>
-                                        - <a href="/products/edit/<%= product._id %>">Edit</a>
-                                        - <a href="/products/delete/<%= product._id %>"
-                                            onclick="return confirm('Are you sure?');">Delete</a>
+                                        <span class="admin-actions">
+                                            <a href="/products/edit/<%= product._id %>">Edit</a>
+                                            <a href="/products/delete/<%= product._id %>"
+                                                onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+                                        </span>
                                         <% } %>
                     </li>
                     <% }) %>

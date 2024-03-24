@@ -6,111 +6,100 @@
     <title>
         <%= product._id ? 'Edit Product' : 'Add Product' %>
     </title>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.querySelector("form");
-            form.onsubmit = function (e) {
-                const name = document.getElementById("name").value;
-                const price = document.getElementById("price").value;
-                if (!name || price <= 0) {
-                    e.preventDefault(); // Prevent form submission
-                    alert("Please ensure all fields are correctly filled out.");
-                }
-            };
-        });
-    </script>
-
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+            margin: 20px;
         }
 
         h1 {
             color: #333;
         }
 
+        form {
+            max-width: 500px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
         label {
-            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
         }
 
         input[type="text"],
         input[type="number"],
         textarea {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
+            padding: 8px;
+            font-size: 16px;
             border: 1px solid #ddd;
+            border-radius: 4px;
             box-sizing: border-box;
-            /* Makes sure padding doesn't affect overall width */
         }
 
         button {
-            background-color: #5cb85c;
+            background-color: #007bff;
             color: white;
             padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
+            font-size: 16px;
         }
 
         button:hover {
-            opacity: 0.9;
+            background-color: #0056b3;
         }
 
         .error {
             color: red;
-            margin: 5px 0;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>
-            <%= product._id ? 'Edit Product' : 'Add Product' %>
-        </h1>
-        <% if (errors && errors.length> 0) { %>
-            <div class="error">
-                <% errors.forEach(function(error) { %>
-                    <p>
-                        <%= error.msg %>
-                    </p>
-                    <% }) %>
-            </div>
-            <% } %>
-                <form action="<%= product._id ? '/products/edit/' + product._id : '/products/add' %>" method="post">
-                    <div>
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" name="name" value="<%= product.name || '' %>" required>
-                    </div>
-                    <div>
-                        <label for="description">Description:</label>
-                        <textarea id="description" name="description"
-                            required><%= product.description || '' %></textarea>
-                    </div>
-                    <div>
-                        <label for="price">Price:</label>
-                        <input type="number" id="price" name="price" value="<%= product.price || '' %>" required
-                            step="0.01">
-                    </div>
-                    <button type="submit">
-                        <%= product._id ? 'Update' : 'Add' %> Product
-                    </button>
-                </form>
-    </div>
+    <h1>
+        <%= product._id ? 'Edit Product' : 'Add Product' %>
+    </h1>
+    <% if (errors && errors.length> 0) { %>
+        <div class="error">
+            <% errors.forEach(function(error) { %>
+                <p>
+                    <%= error.msg %>
+                </p>
+                <% }) %>
+        </div>
+        <% } %>
+            <form action="<%= product._id ? '/products/edit/' + product._id : '/products/add' %>" method="post">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" value="<%= product.name || '' %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" required><%= product.description || '' %></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="number" id="price" name="price" value="<%= product.price || 0 %>" required step="0.01">
+                </div>
+                <button type="submit">
+                    <%= product._id ? 'Update' : 'Add' %> Product
+                </button>
+            </form>
+            <a href="/products">Back to List</a>
 </body>
 
 </html>

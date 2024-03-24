@@ -23,6 +23,7 @@ exports.login = async (req, res) => {
         if (user && await bcrypt.compare(password, user.password)) {
             req.session.user = { id: user._id, username: user.username };
             req.session.isAdmin = user.role === 'admin'; // Set isAdmin based on user role
+            req.session.isLoggedIn = true;
             return res.redirect('/products');
         } else {
             // Handle login failure

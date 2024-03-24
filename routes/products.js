@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController');
 const { productValidationRules } = require('../validations/productValidations');
-const { authenticate, isAdmin } = require('../Middleware/authMiddleware'); // Ensure you have these middlewares defined.
+
+const { authenticate, isAdmin, isLoggedIn } = require('../Middleware/authMiddleware'); // Ensure you have these middlewares defined.
 
 // Display all products
-router.get('/', productController.listProducts);
+router.get('/', isLoggedIn, productController.listProducts);
 
 // Display form for adding a new product (Admins only)
 router.get('/add', authenticate, isAdmin, productController.showAddProductForm);

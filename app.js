@@ -20,11 +20,18 @@ app.use(session({
     secret: 'your_secret_key',
     resave: false,
     saveUninitialized: true,
+    cookie: { secure: !true }
 }));
-
 app.set('view engine', 'ejs');
 
 // Routes
+app.get('/', (req, res) => {
+    if (req.session.isLoggedIn) {
+        res.redirect('/products'); // User is logged in, redirect to products page
+    } else {
+        res.redirect('/users/login'); // User is not logged in, redirect to login page
+    }
+});
 app.use('/users', userRoutes);
 app.use('/products', productRoutes);
 

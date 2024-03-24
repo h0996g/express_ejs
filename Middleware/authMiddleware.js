@@ -12,3 +12,9 @@ exports.isAdmin = (req, res, next) => {
     res.status(403).send('Admin access required');
   }
 };
+exports.isLoggedIn = (req, res, next) => {
+  if (!req.session.isLoggedIn) {
+    return res.redirect('/users/login');
+  }
+  next();
+};
