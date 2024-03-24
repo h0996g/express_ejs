@@ -8,6 +8,10 @@ const { authenticate, isAdmin, isLoggedIn } = require('../Middleware/authMiddlew
 // Display all products
 router.get('/', isLoggedIn, productController.listProducts);
 
+// for showing product details called showProductDetails
+router.get('/details/:id', isLoggedIn, productController.showProductDetails);
+
+
 // Display form for adding a new product (Admins only)
 router.get('/add', authenticate, isAdmin, productController.showAddProductForm);
 

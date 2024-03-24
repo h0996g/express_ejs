@@ -32,6 +32,18 @@ exports.addProduct = (req, res) => {
         .then(() => res.redirect('/products'))
         .catch(err => res.status(500).send(err.message));
 };
+exports.showProductDetails = async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        if (!product) {
+            return res.status(404).send('Product not found');
+        }
+        res.render('details', { product });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('An error occurred');
+    }
+};
 
 exports.showEditProductForm = async (req, res) => {
     try {
