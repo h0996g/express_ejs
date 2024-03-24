@@ -8,17 +8,24 @@
 
 <body>
     <h1>Product List</h1>
-    <a href="/products/add">Add New Product</a>
-    <ul>
-        <% products.forEach(function(product) { %>
-            <li>
-                <%= product.name %>: $<%= product.price %>
-                        - <a href="/products/edit/<%= product._id %>">Edit</a>
-                        - <a href="/products/delete/<%= product._id %>"
-                            onclick="return confirm('Are you sure?');">Delete</a>
-            </li>
-            <% }); %>
-    </ul>
+    <% if (typeof isAdmin !=='undefined' && isAdmin) { %>
+        <a href="/products/add">Add New Product</a>
+        <% } %>
+            <!-- Logout Link -->
+            <a href="/users/logout" style="float: right;">Logout</a>
+
+            <ul>
+                <% products.forEach(product=> { %>
+                    <li>
+                        <%= product.name %> - <%= product.description %> - $<%= product.price %>
+                                    <% if (isAdmin) { %>
+                                        - <a href="/products/edit/<%= product._id %>">Edit</a>
+                                        - <a href="/products/delete/<%= product._id %>"
+                                            onclick="return confirm('Are you sure?');">Delete</a>
+                                        <% } %>
+                    </li>
+                    <% }) %>
+            </ul>
 </body>
 
 </html>

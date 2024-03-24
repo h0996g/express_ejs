@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <%= title %>
+    </title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/products">Home</a></li>
+                <% if (isAdmin) { %>
+                    <li><a href="/products/add">Add New Product</a></li>
+                    <% } %>
+                        <% if (req.session.user) { %>
+                            <li><a href="/users/logout">Logout</a></li>
+                            <% } else { %>
+                                <li><a href="/users/login">Login</a></li>
+                                <li><a href="/users/register">Register</a></li>
+                                <% } %>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <%- body %>
+    </main>
+</body>
+
+</html>
